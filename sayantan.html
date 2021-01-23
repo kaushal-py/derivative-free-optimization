@@ -41,11 +41,142 @@
   <p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications.</p>
 
   <h2>Simulated Annealing</h2>
-  <p>TODO: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni ad esse odio repudiandae quidem porro, laborum vel aspernatur praesentium deleniti quaerat commodi blanditiis, natus cum impedit aperiam voluptatem architecto. Maiores.</p>
-  <h3>Subheading</h3>
-  <h4>Sub-subheading</h4>
-  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Et ad, ducimus dolorum nisi quidem inventore. Pariatur illo quis quia ratione provident labore id? Ea reiciendis saepe dolore commodi expedita placeat.</p>
+  <p>Simulated Annealing is another metaheuristic based method of optimization inspired by a natural phenomenon like Genetic Algorithm. While genetic algorithms are inspired by biological evolution, simulated annealing is motivated by the metallurgical process of annealing. When a piece of metal is heated, its potential energy increases and crystal structures become randomized. As it is cooled the mobility of atoms decreases and crystal structures start forming. The nature of crystals formed depends on the rate of cooling. If cooled slowly there is enough time for crystal growth and ordered crystal structues are formed, whereas if cooled very fast, a randomized structure is obtained as there is no time for the crystals to grow.   </p>
+  <p>
+    
+    <img src="images/fast vs slow annealing.png" alt="demo image">  
+    <br>
+    Left image shows randomzied crystals due to fast cooling whereas the right image shows ordered crystals when cooled slowly
+  </p>
+  <h3>Optimization Ideas </h3>
+  <h4>Energy Distribution</h4>
+  <p>Any system in thermal equilibrium at temperature T has its energy distributed according to the Boltzman distribution. The ratio of probabilities of state i and j depends only on the energy difference of the two states. 
+   $$ \dfrac {p_i} {p_j} = e^{- \dfrac {\Delta E} {KT} } $$
+  <p>
+  <img src="images/Boltzmann.png" alt="demo image">  
+    <br>
+    We observe that as the temperature falls, the probability ratio tends towards 0. This means that probability of state i becomes extremely low and the entire energy can be deterministically said to be at state j. This transition happens more rapidly when the energy difference between the states is large. This is intuitive too as the randomness is present only in nearby states unless temperature is very high.
+    <h4>Translating ideas into algorithm</h4>
+    <p>
+    Imagine now we wish to minimize a multimodal function in a certain search space. The function can be either discrete or continuous. We choose a certain initial point x0 and a high temperature parameter value T0. Now, we generate another point in the neighbourhood of the initial point x1. We can imagine these points as states and the value of the function at these points to be their corresponding energies say f(x0) and f(x1). Now we have to decide if we should move to point x1 or reject it. If the value of the function decreases we accept it similar to other search methods. On the other hand, if the value of the function increases we don't reject it straight away as we would do with conventional algorithms. Instead we reject it with a probability. This enables the algorithm to not get stuck at a local minima as sometimes steps are taken which increases function value. To control the rejection probability we model it by the Boltzmann distribution parametrized by a temperature parameter. Initially when temperature is high, exploration of state space is high but as the temperature decreases it accepts lesser and lesser values when function value increases and ultimately homes in on a certain minima. If the temperature is reduced slowly, enough exploration is done, so most likely it will find the global minima approximately.</p>
+  <h4>Demo Problem</h4>
+  <p>Let us try to find the global minima of a multimodal function. Although the algorithm described here is equally applicable for higher dimensions as well as discrete functions we choose a 1D continuous function for keeping things simple. Let us define the optimization problem and visualize the objective function to see why it cannot be solved by traditional algorithms<br>
+ $$ Minimize \: f(x) = sin(x) + sin ( \dfrac{10} {3} x) \\ subject \; to \; 0 \le x \le 6 $$ </p>
+ <p> 
+    <img src="images/fx.png" alt="demo image"> 
+    <br>
+    We see that the function has three local minimas and 3 local maximas
+    </p>
+    <h4>Generating the neighbours and choosing parameters</h4>
+    <p>
+    If we had a discrete function then it can be represented by a graph which clearly shows which states are reachable from a given state. Since we have a continuous function we need a judicious heuristic for generating the next state. One way to do this would be to pick an initial point at random from the given range and then model a Gaussian distribution around this initial point set as the mean. We know that nearby point probabilities are greater than far away ones, so we can set three times the standard deviation as half the difference between upper and lower bounds of the function. When we sample from this distribution we will get a point within the range 99% of the time. In case we get a point outside the bound we simply resample. There are several techniques of sampling from a given distribution like Box Mueller, rejection sampling and Hastings Metropolis algorithm for large dimensional problems. In this example we will simply use the built in numpy function.</p>
+  <dt-code block language="python">
+    def ptsampler(x0,x_bounds,n): 
+        sd=(x_bounds[1]-x_bounds[0])/6.
+        temp=np.random.normal(loc=x0, scale=sd, size=n)
+        while(np.min(temp)<x_bounds[0] or np.max(temp)>x_bounds[1] ):
+            temp= np.random.normal(loc=x0, scale=sd, size=n)
+        return temp
+  </dt-code>  
+  <p> This function takes an initial point x0, the lower and upper bounds in x_bounds and number of samples to generate as n. It sets the mean as x0 and three times standard deviation as half of the domain length and returns n samples satisfying the constraints. The values of the function are less than 10 and we may choose the starting temperature as 1. The cooling schedule too is a hyper parameter we need to choose. There are variations like Thermodynamic Simulated Annealing where temperature is modelled as a complex function of the states. In this case we simply reduce the temperature 1.8 times after every 4 iterations. The stopping criteria is a maximum number of iterations or when the temperature falls below \( 10^{-5} \).</p>
+  <h4> The acceptance criteria </h4>
+  <p>After generating the point x1 we calculate f(x1)-f(x0). If this is positive the point is accepted and the process is repeated. If this is negative we calculate \( p = e^{- \dfrac{ f(x1) - f(x0) } {T} } \) <br> We generate a random number r between 0 and 1. If p is greater than r then x1 is also accepted despite the functional value increasing. If r is greater than p, the point x1 is rejected and the process starts again. Note that in the implementation, we need not check if f(x1)-f(x0) is positive as in this the p>1 and this will always be accepted. This is implemented by the two functions acceptprob and acceptreject </p>.
+ <dt-code block language="python">
+def f(x):
+    return np.sin(x)+np.sin(10/3*x)
+def acceptprob(x,T):
+    if(T>0):
+        return math.exp(-x/T)
+    else:
+        return 1.
+def acceptreject(x1,x2,T):
+        t1=np.random.uniform(0,1)
+        if(acceptprob(f(x2)-f(x1),T)>t1):
+        	return True
+        else:
+        	return False
+
+  </dt-code>  
+  <h4>Putting it together</h4>
+  <dt-code block language="python">
+x_bounds=np.array((0,6))
+x0=2.5
+T0=1.
+kmax=100
+k=0
+ak=0
+lt=[]
+xj=x0
+lt.append(xj)
+while k < kmax and T0 > 1e-5:
+    xk=ptsampler(xj,x_bounds,1)[0]
+    if(acceptreject(xj,xk,T0)):
+        xj=xk
+    else:
+        xk=xj
+    if(xj!=lt[-1]):
+        lt.append(xj)
+        k+=1
+    if((ak+1)%4==0):
+        T0/=1.8
+    ak+=1
+  </dt-code>
+ <p> Here we keep reducing the temperature even if steps are getting rejected to keep hardening the solution. x0 is chosen to be 2.5 which is a hard point for the algorithm as there are two local minimas on either side of it. We stop the iteration when either there are 100 accepted points or the temperature falls below \( 10^-5 \). Running this once we see it reaches x=5.14 after 17 steps. From the graph of the function we can see that this is approximately where the global minima lies.</p>
+ 
+   
+    <p>
+    We see the temperature decreases and finally the global minima is found. For a robustness check we initialize the starting point with 3 different values and compare the number of steps required. All other hyper parameters are kept fixed.</p>
+    
+    <p>
+    
+    <style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;}
+.tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+  font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+.tg .tg-0lax{text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<thead>
+  <tr>
+    <th class="tg-0lax">Starting Point</th>
+    <th class="tg-0lax">Global Minima</th>
+    <th class="tg-0lax">Number of Steps</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-0lax">1</td>
+    <td class="tg-0lax">5.13</td>
+    <td class="tg-0lax">18</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">2.5</td>
+    <td class="tg-0lax">5.14</td>
+    <td class="tg-0lax">17</td>
+  </tr>
+  <tr>
+    <td class="tg-0lax">6</td>
+    <td class="tg-0lax">5.15</td>
+    <td class="tg-0lax">12</td>
+  </tr>
+</tbody>
+</table>
+    
+    
+    
+
+    </p>
+    <p>We observe that the closer initial value is to the global minima, lesser is the number of steps required</p>
+    <img src="images/x1.gif" alt="demo image" width="30%" height="30%">  <img src="images/x25.gif" alt="demo image" width="30%" height="30%"> <img src="images/x6.gif" alt="demo image" width="30%" height="30%"> 
+    <br>
+ 
   <p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications.</p>
+  
+  
+
+
 
 </dt-article>
 
@@ -54,6 +185,13 @@
 
 <script type="text/bibliography">
   @article{gregor2015draw,
+    title={DRAW: A recurrent neural network for image generation},
+    author={Gregor, Karol and Danihelka, Ivo and Graves, Alex and Rezende, Danilo Jimenez and Wierstra, Daan},
+    journal={arXivreprint arXiv:1502.04623},
+    year={2015},
+    url={https://arxiv.org/pdf/1502.04623.pdf}
+  }
+    @book{tick,
     title={DRAW: A recurrent neural network for image generation},
     author={Gregor, Karol and Danihelka, Ivo and Graves, Alex and Rezende, Danilo Jimenez and Wierstra, Daan},
     journal={arXivreprint arXiv:1502.04623},
