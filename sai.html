@@ -26,8 +26,10 @@
       Many modern techniques such as the ever-so popular Machine Learning that has become so omnipresent today from chatbots and virtual assistants to giving Recommendations on Netflix on what to watch next are also at their very core - optimization paradigms
       Since optimization is so useful, it stands to reason that bottlenecks affecting optimization procedures should be quite important as well and indeed they are, as a matter of fact billions of dollars are spent in R&D just to get rid of these bottlenecks.
       One such bottleneck that has stymied the devolopment of better algorithms has been the over-reliance on <i> "derivatives" </i>. An enormous majority of today's optimization algorithms including those all-powerful Neural - Networks rely a great deal on <i> Derivative </i> based
-      methods. To understand what a derivative based method does consider the following ; given some function that you want to optimize (<i> henceforth : the objective function </i>) say, $$ f(x) $$
-      the method would use its derivative to get some information to reach the optimal solution. High school math is enough to let us know that $$ f'(x) = 0 $$ at an extremum and a basic knowledge of multivariable calculus extends this to $$ \nabla f(\bf{x}) = \bf{0} $$
+      methods. To understand what a derivative based method does consider the following ; given some function that you want to optimize (<i> henceforth : the objective function </i>) say, </p> <p> $$ f(x) $$ </p>
+      the method would use its derivative to get some information to reach the optimal solution. High school math is enough to let us know that</p> <p> $$ f'(x) = 0 $$ </p> <p> at an extremum and a basic knowledge of multivariable calculus extends this to </p> <p>
+        $$ \nabla f(\bf{x}) = \bf{0} $$ </p> <p>
+          
       If you want more information to <i> converge </i> faster to a solution, then you can use higher derivatives or their approximations. Modern methods like Automatic Differentiation makes computing derivatives easy and since the algorithms using these
       are straightforward to implement and have robust guarantees of <i> "converging" </i> , they are used quite a great deal. Even so, they do suffer from certain issues that necessitates the ideas discussed in our post. We will be looking into those in the next section, and that's all for
       the basics of Optimization. For a more detailed introduction on optimization and derivative based methods, there are some great videos and courses out there on You tube , not to mention the bible - Numerical Optimization by Nocedal and Wright which is a great read.
@@ -43,7 +45,7 @@
   
   <p> The above figure shows a realistic situation that happens when we use Derivative based methods. If you could recall from above, the idea behind derivative based methods is to use characteristics
       of the derivatives of the objective function to get closer to an optimal value. This works quite well for your usual sort of functions that are well behaved such as convex functions ("Bowl shaped functions" : Your task 
-      is to reach the bottom of the bowl, the derivative provides the direction of steepest descent and then whoosh! Off you go! Just to see why this is so fast, take a bowl and use your fingers to replicate the process, you woulkd reach the bottom in no time!) b
+      is to reach the bottom of the bowl, the derivative provides the direction of steepest descent and then whoosh! Off you go! Just to see why this is so fast, take a bowl and use your fingers to replicate the process, you would reach the bottom in no time!) 
       but goes wonky for other functions that are not so well behaved. This is because "derivatives" are unable to distinguish between <i> locally </i> and <i> globally </i> optimal solutions. 
            
   </p>
@@ -142,7 +144,7 @@ The above image shows how crossing over occurs in genes during cell division. Th
   Now, it may be the case that $$F_{1}$$ has much more individuals than $$F_{0}$$ in order to avoid increasing storage complexity with excessive redundant candidates, we take a leaf out of Darwin' book and only consider the <i> Fittest</i>, this so called <i> elitism </i>, is one of many selection procedures which are used to ensure that succesive generations have controllable population.
   With the basic formalism sorted and remembering our intuition from Darwinian evolution, we can construct an algorithmic procedure for performing a Genetic Algorithm as follows : 
   
-  <img src = "images/ga_exec.jpg" , alt = "Execution of a Genetic Algorithm"> <br>
+  <img src = "images/ga_exec.JPG" , alt = "Execution of a Genetic Algorithm"> <br>
   
   
 </p>
@@ -200,17 +202,17 @@ Consider a circular wheel. The wheel is divided into n pies, where n is the numb
   
   <li> <p> Stochastic Universal Sampling is quite similar to Roulette wheel selection, however instead of having just one fixed point, we have multiple fixed points as shown in the following image. Therefore, all the parents are chosen in just one spin of the wheel. Also, such a setup encourages the highly fit individuals to be chosen at least once.
   
-    An image showcasing this procedure is as follows :
+    An image showcasing this procedure is as follows : </p>
     
     <img src = "images/pa_2.JPG"> <br>
- </p></li> </ol>
+ </li> </ol>
   
-  It is to be noted that fitness proportionate selection methods don’t work for cases where the fitness can take a negative value.
+ <p> It is to be noted that fitness proportionate selection methods don’t work for cases where the fitness can take a negative value. </p>
   
 </li>
 
 <li>
-  <p> Our next stragey is the so called Tournament Selection. In K-Way tournament selection, we select K individuals from the population at random and select the best out of these to become a parent. The same process is repeated for selecting the next parent. Tournament Selection is also extremely popular in literature as it can even work with negative fitness values.
+  <p> Our next strategy is the so called Tournament Selection. In K-Way tournament selection, we select K individuals from the population at random and select the best out of these to become a parent. The same process is repeated for selecting the next parent. Tournament Selection is also extremely popular in literature as it can even work with negative fitness values.
     The following image showcases this strategy.
   </p>
   
