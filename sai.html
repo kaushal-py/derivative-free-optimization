@@ -26,7 +26,7 @@
       Many modern techniques such as the ever-so popular Machine Learning that has become so omnipresent today from chatbots and virtual assistants to giving Recommendations on Netflix on what to watch next are also at their very core - optimization paradigms
       Since optimization is so useful, it stands to reason that bottlenecks affecting optimization procedures should be quite important as well and indeed they are, as a matter of fact billions of dollars are spent in R&D just to get rid of these bottlenecks.
       One such bottleneck that has stymied the devolopment of better algorithms has been the over-reliance on <i> "derivatives" </i>. An enormous majority of today's optimization algorithms including those all-powerful Neural - Networks rely a great deal on <i> Derivative </i> based
-      methods. To understand what a derivative based method does consider the following ; given some function that you want to optimize (<i> henceforth : the objective function </i>) say, </p> <p> $$ f(x) $$ </p>
+      methods. To understand what a derivative based method does consider the following ; given some function that you want to optimize (<i> henceforth : the objective function </i>) say, </p> <p> $$ f(x) $$ </p><p>
       the method would use its derivative to get some information to reach the optimal solution. High school math is enough to let us know that</p> <p> $$ f'(x) = 0 $$ </p> <p> at an extremum and a basic knowledge of multivariable calculus extends this to </p> <p>
         $$ \nabla f(\bf{x}) = \bf{0} $$ </p> <p>
           
@@ -91,7 +91,7 @@
 
 <p> The paradigm that we are going to discuss in this section - namely, Genetic Algorithms are a specific kind of nature inspired optimization algorithms which are inspired from genetics and Darwin's theory of evolution </p>
 
-<h4> Another brief summary - This time a primer on biology! </h4>
+<p> <h4> Another brief summary - This time a primer on biology! </h4> </p>
 
 <p> The theory of genetics and Darwin's theory on evolution are so widespread that an introduction sounds redudant. Even so, we provide a brief refresher in this section with the definition of some terms that will be encountered in our discussion but are not so well known.
 </p>
@@ -116,13 +116,13 @@ since the organisms without the said benificial trait would have died out! This 
 division occuring in the reproductive or "germinal" cells such as the sperm or the egg.) Intutively, one can think of the crossing over process in the following manner : keep two chromosomes next to each other take some alleles from one and interchange it with the other to get a certain resultant chromosome. This is also made clear in the figure below:
 
 </p>
-<img src = "images/crossing_over.png" , alt = "crossing over"> <br>
+<p> <img src = "images/crossing_over.png" , alt = "crossing over"> <br> </p>
   
 <p> The above image shows how crossing over occurs in genes during cell division. That's all the information we would need from biology. Now with the intution in place let's get to how we would be actually using "Genetic Algorithms" 
   
 </p>
 
-<h4> The formulation of Genetic Algorithms </h4>
+<p> <h4> The formulation of Genetic Algorithms </h4> </p>
 
 <p>  Taking inpiration from our earlier discussion, our objective function should represent the environment in some sense and suppose we have a bunch of "solutions" or a <i> population </i> of initial candidates through evolution we should get a species that shows optimal <i> fitness </i> for our situation. 
      To ensure that our formalism is consistent with the biological one, define a chromosome to be an array of possible values that represent our solution candidate. A gene is a certain index in our array and the value at that index is the allele. The set of chromosomes we have at one point can be said to
@@ -132,11 +132,13 @@ division occuring in the reproductive or "germinal" cells such as the sperm or t
   
   
 </p>
-  
+
+<p>
+
 <img src = "images/ga_basic.JPG" , alt = "Representation"> <br>
 
 <img src = "images/ga_2.JPG" , alt = "Genotype to phenotype"> <br>
-
+</p>
 
 
 <p>
@@ -145,11 +147,11 @@ division occuring in the reproductive or "germinal" cells such as the sperm or t
   Now, it may be the case that <i>F <sub> 1 </sub> </i> has much more individuals than <i>F <sub> 0 </sub> </i> in order to avoid increasing storage complexity with excessive redundant candidates, we take a leaf out of Darwin' book and only consider the <i> Fittest</i>, this so called <i> elitism </i>, is one of many selection procedures which are used to ensure that succesive generations have controllable population.
   With the basic formalism sorted and remembering our intuition from Darwinian evolution, we can construct an algorithmic procedure for performing a Genetic Algorithm as follows : 
 </p>   
-  <img src = "images/ga_exec.JPG" , alt = "Execution of a Genetic Algorithm"> <br>
+<p> <img src = "images/ga_exec.JPG" , alt = "Execution of a Genetic Algorithm"> <br> </p>
   
   
 
-<h4> Some tricks of the trade on How to implement a Genetic Algorithm </h4>
+<p> <h4> Some tricks of the trade on How to implement a Genetic Algorithm </h4> </p>
 
 <p> <h5> How to initialize the population? </h5> </p>
 
@@ -171,7 +173,9 @@ The trick that is used commonly these days is to combine both methods, add sever
 </ul>
 <p> The last requirement is the most tricky, but also the most necessary one, otherwise our Genetic algorithm would simply not work!. In fact, the priority order to be followed is 3>2>1 when designing a fitness measure but it's crucial to ensure that we don't abandon lower priority requirements entirely.
 </p> 
-<h5> How to choose Parents? </h5>
+
+<p> <h5> How to choose Parents? </h5> </p>
+
 <p> To understand why we need this discussion in the first place, let's go back to the problem that motivated survival selection. Once we perform a crossing-over on the entire population we end up getting too many possibilities for the next generation! Apart from survival selection which is needed to reduce the storage complexity,
 We also need to reduce the time complexity of the crossing-over step somehow in order to get a practically fast algorithm. The easiest way to do this is by ensuring that we can choose the right sort of "parents". That is by performing the crossing over only on a certain subset of the population we can ensure that diversity is propagated optimally whilst
 not overburdening our resources this is inspired from nature too, specifically the phenomenon of <i>Sexual Selection</i> which was also discussed by Darwin in his seminal work, <i>On the orgin of Species </i>. The colourful plummage of peacocks for example is an evolutionary adaptation that allows for a peahen to slect an optimal mate.
@@ -201,14 +205,14 @@ Consider a circular wheel. The wheel is divided into n pies, where n is the numb
     
     <p> The following image shows roulette wheel population. </p> 
     
-    <img src = "images/pa_1.JPG"> <br>
+    <p> <img src = "images/pa_1.JPG"> <br> </p>
  </li>
   
   <li> <p> Stochastic Universal Sampling is quite similar to Roulette wheel selection, however instead of having just one fixed point, we have multiple fixed points as shown in the following image. Therefore, all the parents are chosen in just one spin of the wheel. Also, such a setup encourages the highly fit individuals to be chosen at least once.
   
     An image showcasing this procedure is as follows : </p>
     
-    <img src = "images/pa_2.JPG"> <br>
+    <p> <img src = "images/pa_2.JPG"> <br> </p>
  </li> </ol>
   
  <p> It is to be noted that fitness proportionate selection methods don’t work for cases where the fitness can take a negative value. </p>
@@ -233,14 +237,14 @@ Consider a circular wheel. The wheel is divided into n pies, where n is the numb
   </li>
 </ul>
 
-<h5> How to perform mutations , crossing-over and Survival Selection?</h5>
+<p> <h5> How to perform mutations , crossing-over and Survival Selection?</h5> </p>
 
 <p> We would not go into detail on the procedure of performing mutations and crossing-over, simply because there are too many possibilites. The important thing is to note that for mutation with a certain probability we randomly change individual chromosomes and for 
 crossing-over we are expected to use two chromosomes in order to get a third one. There are many means to perform survival selection apart from the <i> elitism </i> discussed earlier there is also the <i> aging </i> procedure in which the indvidual from a certain generation 
 if it remains as such for a predetermined N  number of succesive generations then it will be automatically removed at the N+1 <sup> th </sup> succesive generation. This procedure clearly mimics the process of aging and death found in nature.
 There are even more means by which we can ensure that survival selection but the key point is to note that we trim the population after every generation. </p>
 
-<h5>How to know that convergence has been acheived? </h5>
+<p> <h5>How to know that convergence has been achieved? </h5> </p>
 
 <p> It has been observed that initially, the Genetic Algorithm progresses very fast with better solutions coming in every few iterations, but this tends to saturate in the later stages where the improvements are very small. We usually want a termination condition such that our solution is close to the optimal, at the end of the run.
 
@@ -253,8 +257,8 @@ Usually, we keep one of the following termination conditions :
 </ul>
 </p>
 
-It is important to note that all the tricks discussed above are highly generic and that is upto the designer of the algorithm to ensure how they implement the algorithm for the problem in hand. Even so these rough guidelines, showcase a certain direction that can be kept in mind
-for a designer to get a more efficient algorithm.
+<p> It is important to note that all the tricks discussed above are highly generic and that is upto the designer of the algorithm to ensure how they implement the algorithm for the problem in hand. Even so these rough guidelines, showcase a certain direction that can be kept in mind
+  for a designer to get a more efficient algorithm. </p>
 
 
 <h3> Demo Problem </h3>
