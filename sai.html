@@ -22,7 +22,7 @@
   </p>
   
   <p> Now, to business. Optimization at a very , very basic level is to solve a certain problem <i> optimally </i>. For example, if you have your final exams for the semester, How would you try to maximize your marks? Or how would a logistics company
-      decide to deliver parcels in a particular city while ensuring that it takes the least amount of time ad fuel , cause well, time is money and fuel ain't cheap! There are many, many such problems at the heart of the modern world
+      decide to deliver parcels in a particular city while ensuring that it takes the least amount of time and fuel , cause well, time is money and fuel ain't cheap! There are many, many such problems at the heart of the modern world
       Many modern techniques such as the ever-so popular Machine Learning that has become so omnipresent today from chatbots and virtual assistants to giving Recommendations on Netflix on what to watch next are also at their very core - optimization paradigms
       Since optimization is so useful, it stands to reason that bottlenecks affecting optimization procedures should be quite important as well and indeed they are, as a matter of fact billions of dollars are spent in R&D just to get rid of these bottlenecks.
       One such bottleneck that has stymied the devolopment of better algorithms has been the over-reliance on <i> "derivatives" </i>. An enormous majority of today's optimization algorithms including those all-powerful Neural - Networks rely a great deal on <i> Derivative </i> based
@@ -113,7 +113,7 @@ if you are interested the recent Nobel Prize in medicine was given for the CRISP
 !) allows the organism to showcase different phenotypes, allowing it to adapt better to the changing environment during its lifetime. But clearly , mutation changes do not seem to allow for increase in fitness of the species as whole! Thw way nature solves this problem is by ensuring that during sexual reproduction when new
 offpsring are generated, there is a significant possibility for traits from either of the two parents to be passed on to the offspring, again as there is no regulatory procedure which trait gets passed on to which offspring is entirely stochastic however over a long time span the proportion of the benificial phenotype will be magnified
 since the organisms without the said benificial trait would have died out! This explains how evolution and extinction of species occurs in nature. This transfer of trait from the genes of the two parents is termed as "crossing-over" (a detailed description of the nomenclature would require a digression on meiosis which is the type of cell
-division occuring in the reproductive or "germinal" cells such as the sperm or the egg.) Intutively, one can think of the crossing over process in the following manner : keep two chromosomes next to each other take some alleles from one and interchange it with the other to get a certain resultant chromosome. This is also made clear in the figure below:
+division occuring in the reproductive or "germinal" cells such as the sperm or the egg.) Intuitively, one can think of the crossing over process in the following manner : keep two chromosomes next to each other take some alleles from one and interchange it with the other to get a certain resultant chromosome. This is also made clear in the figure below:
 
 </p>
 <p> <img src = "images/crossing_over.png" , alt = "crossing over"> <br> </p>
@@ -143,7 +143,7 @@ division occuring in the reproductive or "germinal" cells such as the sperm or t
 
 <p>
   Naturally, the full power of our evolutionary mechanism wouldn't work without including the phenomena of <i> mutation </i> and <i> crossing-over </i>. We can do this in the following way, with a certain probability <i> M <sub> p </sub> </i>
-  we perform an operation on a chromsome such as swipping the values of two indices or randomly changing the value at a particular gene etc, such operations clearly are an analogue of mutation of natural genes. A crossing over now, is any operation that combines two chromosomes in a certain way to get a new resultant chromosome. Now, suppose we have an initial population, say <i> F <sub> 0 </sub> </i> after doing an initial fitness calculation we mutate individuals and then perform crossing-over to get a new population, <i> F <sub> 1 </sub> </i>.
+  we perform an operation on a chromsome such as swapping the values of two indices or randomly changing the value at a particular gene etc, such operations clearly are an analogue of mutation of natural genes. A crossing over now, is any operation that combines two chromosomes in a certain way to get a new resultant chromosome. Now, suppose we have an initial population, say <i> F <sub> 0 </sub> </i> after doing an initial fitness calculation we mutate individuals and then perform crossing-over to get a new population, <i> F <sub> 1 </sub> </i>.
   Now, it may be the case that <i>F <sub> 1 </sub> </i> has much more individuals than <i>F <sub> 0 </sub> </i> in order to avoid increasing storage complexity with excessive redundant candidates, we take a leaf out of Darwin' book and only consider the <i> Fittest</i>, this so called <i> elitism </i>, is one of many selection procedures which are used to ensure that succesive generations have controllable population.
   With the basic formalism sorted and remembering our intuition from Darwinian evolution, we can construct an algorithmic procedure for performing a Genetic Algorithm as follows : 
 </p>   
@@ -155,7 +155,7 @@ division occuring in the reproductive or "germinal" cells such as the sperm or t
 
 <h5> <p>  How to initialize the population? </p> </h5> 
 
-<p> We can choose to either populate our initial choices randomly or by employing a certain assumption. While the fomer method may converge much slowly after several rounds of experimental research it has been proven to converge to a more optimal solution, inutitively this is because the latter method has lesser "diversity" and thus can only show a certain number of possible phenotypes.
+<p> We can choose to either populate our initial choices randomly or by employing a certain assumption. While the fomer method may converge much slowly after several rounds of experimental research it has been proven to converge to a more optimal solution, intuitively this is because the latter method has lesser "diversity" and thus can only show a certain number of possible phenotypes.
 The trick that is used commonly these days is to combine both methods, add several randomly initialized chromosomes while adding some "good" ones as well, this can cause the convergence to be fast while ensuring that the advnatge of randomization is not lost as well.
 </p> 
 
@@ -178,8 +178,8 @@ The trick that is used commonly these days is to combine both methods, add sever
 
 <p> To understand why we need this discussion in the first place, let's go back to the problem that motivated survival selection. Once we perform a crossing-over on the entire population we end up getting too many possibilities for the next generation! Apart from survival selection which is needed to reduce the storage complexity,
 We also need to reduce the time complexity of the crossing-over step somehow in order to get a practically fast algorithm. The easiest way to do this is by ensuring that we can choose the right sort of "parents". That is by performing the crossing over only on a certain subset of the population we can ensure that diversity is propagated optimally whilst
-not overburdening our resources this is inspired from nature too, specifically the phenomenon of <i>Sexual Selection</i> which was also discussed by Darwin in his seminal work, <i>On the orgin of Species </i>. The colourful plummage of peacocks for example is an evolutionary adaptation that allows for a peahen to slect an optimal mate.
-We would not go in to sexual selection in detail here, but there are a great many works out there that explain and illustrate this idea beautifully. To get back to the issue we have at hand, some strategies that are used in practice for parent slection are as follows :
+not overburdening our resources this is inspired from nature too, specifically the phenomenon of <i>Sexual Selection</i> which was also discussed by Darwin in his seminal work, <i>On the orgin of Species </i>. The colourful plummage of peacocks for example is an evolutionary adaptation that allows for a peahen to select an optimal mate.
+We would not go in to sexual selection in detail here, but there are a great many works out there that explain and illustrate this idea beautifully. To get back to the issue we have at hand, some strategies that are used in practice for parent selection are as follows :
 </p>
 
 <ul>
