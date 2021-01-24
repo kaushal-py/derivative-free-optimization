@@ -137,9 +137,10 @@ The above image shows how crossing over occurs in genes during cell division. Th
 </p>
 
 <p>
-  Naturally, the full power of our evolutionary mechanism wouldn't work without including the phenomena of <i> mutation </i> and <i> crossing-over </i>. We can do this in the following way, with a certain probability $M_{p}$ perform an operation on a chromsome such as swipping the values of two indices or randomly changing
-  the value at a particular gene etc, such operations clearly are an analogue of mutation of natural genes. A crossing over now, is any operation that combines two chromosomes in a certain way to get a new resultant chromosome. With this sorted and remembering our intuition from Darwinian evolution, we can construct an algorithmic procedure for 
-  performing a Genetic Algorithm as follows : 
+  Naturally, the full power of our evolutionary mechanism wouldn't work without including the phenomena of <i> mutation </i> and <i> crossing-over </i>. We can do this in the following way, with a certain probability $$M_{p}$$ perform an operation on a chromsome such as swipping the values of two indices or randomly changing
+  the value at a particular gene etc, such operations clearly are an analogue of mutation of natural genes. A crossing over now, is any operation that combines two chromosomes in a certain way to get a new resultant chromosome. Now, suppose we have an initial population, say $$F_{0}$$ after doing an initial fitness calculation we mutate individuals and then perform crossing-over to get a new population, $$F_{1}$$.
+  Now, it may be the case that $$F_{1}$$ has much more individuals than $$F_{0}$$ in order to avoid increasing storage complexity with excessive redundant candidates, we take a leaf out of Darwin' book and only consider the <i> Fittest</i>, this so called <i> elitism </i>, is one of many selection procedures which are used to ensure that succesive generations have controllable population.
+  With the basic formalism sorted and remembering our intuition from Darwinian evolution, we can construct an algorithmic procedure for performing a Genetic Algorithm as follows : 
   
   <img src = "images/ga_exec.jpg" , alt = "Execution of a Genetic Algorithm"> <br>
   
