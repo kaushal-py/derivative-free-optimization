@@ -12,32 +12,259 @@
   <dt-byline></dt-byline>
 
   <h2>Genetic Algorithms</h2>
-  <p>TODO: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni ad esse odio repudiandae quidem porro, laborum vel aspernatur praesentium deleniti quaerat commodi blanditiis, natus cum impedit aperiam voluptatem architecto. Maiores.</p>
-  <h3>Subheading</h3>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio dolor delectus tenetur ex quibusdam esse voluptatibus corrupti incidunt, suscipit inventore, ducimus fugit sunt in ipsam ratione. Deserunt dolor eius minima.</p>
-  <h4>Sub-subheading</h4>
-  <p>Math equations inline can be written as: \( a=b+c+\dfrac{e}{f} \). Check index.html (line 28) for syntax.</p>
-  <p>Write Block level math equations using double dollars. 
-    $$ a \cdot x^2 + b \cdot x + c = 0 $$
-  </p>
-
-  <p>Template for inserting code</p>
-  <dt-code block language="python">
-    import numpy as np
-    import matplotlib.pyplot as plt
-
-    x = np.arange(10)
-    y = np.arange(10)+np.random.randn(10)
-    plt.plot(x, y)
-    plt.show()
-  </dt-code>
-  <p>
-    Add images / gifs as following:
-    <img src="images/demofig.png" alt="demo image">
+  
+  <h3> Optimization - a very , very brief primer! </h3>
+  
+ <p>  So really, what is optimization? Since this post talks about <i> Derivative - Free Optimization </i> so to speak, it is assumed that the reader is familiar with the basics of optimization. If you are not, no need to fret this section provides a very, very brief intro, frankly, 
+  there is no need as such to have a thorough foundation on the underlying mechanism of optimization to understand the following discussion. But like many frameworks, the entire reason why Derivative free methods exist, such as the ones discussed here, Genetic Algorithms and Simulated Annealing
+  is based on some of the issues encountered in the old-school methods. So it would be a great idea to have some superficial understanding of what's going on, just so that we can appreciate the innovative ideas that have solved them </p>
+  
   </p>
   
+  <p> Now, to business. Optimization at a very , very basic level is to solve a certain problem <i> optimally </i>. For example, if you have your final exams for the semester, How would you try to maximize your marks? Or how would a logistics company
+      decide to deliver parcels in a particular city while ensuring that it takes the least amount of time ad fuel , cause well, time is money and fuel ain't cheap! There are many, many such problems at the heart of the modern world
+      Many modern techniques such as the ever-so popular Machine Learning that has become so omnipresent today from chatbots and virtual assistants to giving Recommendations on Netflix on what to watch next are also at their very core - optimization paradigms
+      Since optimization is so useful, it stands to reason that bottlenecks affecting optimization procedures should be quite important as well and indeed they are, as a matter of fact billions of dollars are spent in R&D just to get rid of these bottlenecks.
+      One such bottleneck that has stymied the devolopment of better algorithms has been the over-reliance on <i> "derivatives" </i>. An enormous majority of today's optimization algorithms including those all-powerful Neural - Networks rely a great deal on <i> Derivative </i> based
+      methods. To understand what a derivative based method does consider the following ; given some function that you want to optimize (<i> henceforth : the objective function </i>) say, </p> <p> $$ f(x) $$ </p><p>
+      the method would use its derivative to get some information to reach the optimal solution. High school math is enough to let us know that</p> <p> $$ f'(x) = 0 $$ </p> <p> at an extremum and a basic knowledge of multivariable calculus extends this to </p> <p>
+        $$ \nabla f(\bf{x}) = \bf{0} $$ </p> <p>
+          
+      If you want more information to <i> converge </i> faster to a solution, then you can use higher derivatives or their approximations. Modern methods like Automatic Differentiation makes computing derivatives easy and since the algorithms using these
+      are straightforward to implement and have robust guarantees of <i> "converging" </i> , they are used quite a great deal. Even so, they do suffer from certain issues that necessitates the ideas discussed in our post. We will be looking into those in the next section, and that's all for
+      the basics of Optimization. For a more detailed introduction on optimization and derivative based methods, there are some great videos and courses out there on You tube , not to mention the bible - Numerical Optimization by Nocedal and Wright which is a great read.
+    
+</p>
+
+<h3> Why do we need Derivative free methods? </h3>
+<p> <img src="images/ga_motivation.jpg" alt="GA">
   
-  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Et ad, ducimus dolorum nisi quidem inventore. Pariatur illo quis quia ratione provident labore id? Ea reiciendis saepe dolore commodi expedita placeat.</p>
+  <br>
+    
+  </p>
+  
+  <p> The above figure shows a realistic situation that happens when we use Derivative based methods. If you could recall from above, the idea behind derivative based methods is to use characteristics
+      of the derivatives of the objective function to get closer to an optimal value. This works quite well for your usual sort of functions that are well behaved such as convex functions ("Bowl shaped functions" : Your task 
+      is to reach the bottom of the bowl, the derivative provides the direction of steepest descent and then whoosh! Off you go! Just to see why this is so fast, take a bowl and use your fingers to replicate the process, you would reach the bottom in no time!) 
+      but goes wonky for other functions that are not so well behaved. This is because "derivatives" are unable to distinguish between <i> locally </i> and <i> globally </i> optimal solutions. 
+           
+  </p>
+
+  <p> To understand what this means, look at the figure above, Suppose you are a mountaineer out to conquer the highest mountain on a range, you have got a bunch of peaks there on your landscape. Look at the point labelled <i> Start Here Randomly </i>, what derivative based methods would do is to start climbing upward,
+      they would ensure that you get to the top of the nearest hill, but then you're stuck! You can't take a single step ahead because the derivatve which is sort of a slope monitor tells you that the terrain doesn't go upward from here !
+      So according to your monitor you have reached the peak, but you being a well-prepared person have already done your survey and are aware beforehand that there is a much higher peak ahead! So now you are stuck and angry, but fret not
+     there were many others in the same fix as you were while going through different applications in engineering and science, applications that are quite necessary to the functioning of various aspects of society that we take for granted today.
+     So the answer to this problem is to include an entirely new monitor to understand the terrain - i.e, to consciously chose to avoid using the <i> derivative </i> which is why these methods are called derivative-free methods.
+     There are other reasons to adopt derivative-free based methods but they are mostly <i> computational </i> in nature i.e relate to the problems encountered in getting the derivative in the first place. The above discussed "landscape problem "
+     shows on the other hand a much more intuitive need for going "beyond" the derivative in the first place. Many of the methods we will discuss below are often grouped together in the banner of <i> meta-heuristics </i> (Meta : Latin for beyond,
+     heuristics - methodology of solving a problem, in this case referring to the derivative based methods.) 
+    
+</p>
+
+<p> Now, that we have a certain need for Derivative free methods. Let's get cracking ! </p>
+
+
+<h3> Genetic Algorithms </h3>
+
+<p> Before we begin, We would look to state that the <i> phenomenon </i> of optimization is far more general than we thought. While the way in which humans perform decision making can be modelled as an optimization scenario, the broader behaviour of nature may be modelled 
+    through an optimization perspective. To understand what we are trying to say, look at the figure below
+</p> 
+<p>   <img src="images/pso.JPG" alt="PSO"> <br> </p>
+  
+  <p> The image shows a flock of birds trying to find some fruit to eat. From observation, people observed that any movement of the flock followed three simple rules : 
+</p> 
+
+  <ul> <li> Move in the same direction as your neighbours </li>
+       <li> Stay close to your neighbours </li>
+       <li> Avoid collisions with your neighbours   
+  </ul>
+<p>
+  Surprisingly, these simple rules ensure that the flock finds food in the shortest period of time! What we have therfeore is an optimization paradigm where the problem is to find sufficient food for the entire flock in the shortest possible of time! Many such examples
+  are abound in nature and since the behaviour of nature is often based on certain simple rules (Wouldn't be so widespread otherwise! If birds had to sit down and run robust calculations to calculate how to get food the flock would have died out long ago), they tend to be 
+ <i> derivative -free </i> and quite general. For example , the following amazing article <a href = "https://www.quantamagazine.org/math-of-the-penguins-20200" >Math of the Penguins </a> shows how a flock of Emperor penguins huddle in the most efficient structure possible in order to keep warm
+ in the frigid winter, all based on the simple rule that every penguin wants to stay warm and would thus migrate to a warmer location to get the warmth it needs. The innate simplicity, generality and the <i> understanding </i> that such methods can converge to the optimal solution inspired scientists 
+ and engineers to design many nature inspired algorithms for optimization. (Note : we mentioned that nature inspired paradigms "could" converge to the solution, till date there is no rigid theory on how and why these methods can converge thus making it more of an empirical framework which is why
+ it is often not preferred despite its performance. Moreover, the selection of parameters is always a challenge. For our discussion, we would sweep such issues under the rug for the most part while keeping in mind that they exist, since these methods are quite effective practically which makes it worth
+ to have a proper discussion!)
+
+</p>
+
+<p> The paradigm that we are going to discuss in this section - namely, Genetic Algorithms are a specific kind of nature inspired optimization algorithms which are inspired from genetics and Darwin's theory of evolution </p>
+
+<p> <h4> Another brief summary - This time a primer on biology! </h4> </p>
+
+<p> The theory of genetics and Darwin's theory on evolution are so widespread that an introduction sounds redudant. Even so, we provide a brief refresher in this section with the definition of some terms that will be encountered in our discussion but are not so well known.
+</p>
+
+<p>
+  
+The genetic basis of inheritance suggests that the way individuals of a species pass on their traits to their offspring is through information encoded in their genes, which are basically sections of chromosones which are themselves a bunch of DNA molecules, found in the cells
+of the individual organisms. How genes interact in order to come up with the various traits such as height or colour of the eyes is beyond the scope of any introductory material but we may assume for the sake of simplcity that genes have certain possible values termed as <i> alleles </i>.
+Different alleles in a chromosome together determine how a certain trait is expressed. We define any observable characteristic such as height or the colour of eyes to be a <i> phenotype </i>. All the alleles displayed in the various chromosomes that determine a phenotype are the 
+<i> Genotype </i>.
+  
+</p>
+
+<p>Now, we come to the discussion on evolution. If we assume that the genotype of an organism remains constant throughout its existence then we have no diveristy - which is not ideal given that the environment is always changing and thus, forcing the organism and the species to respond in different ways.
+Thus, the changing environment throughout the course of our history has forced organisms to respond in different sorts of ways in order to avoid becoming extinct , i.e by showcasing different phenotypes which implies that we need different genotypes. Thus, we come to the concept of darwinian evolution, i,e "Survial of the fittest", 
+Therefore "evolution" which for our case we assume has the meaning that the organism <i> shows the optimal fitness in a given environment </i> has to proceed by a modification of the genotype guided by some <i> fitness measure</i> so that the organism can survive better. 
+Since, the genotype has to be modified in some manner, how can organisms go about doing this? The first and the easiest way, is to change the genotype on their own, since there is no explicit way for organisms to explicitly tell their genotype to change in a certain way, any such change has to be <i> random </i>  in nature(Btw , 
+if you are interested the recent Nobel Prize in medicine was given for the CRISPR method which is an innovative method that allows for explicit editing of the genotype). Any such random change or <i> mutation </i> (You would have encountered this term in the X-Men movies for example, with exactly the same meaning
+!) allows the organism to showcase different phenotypes, allowing it to adapt better to the changing environment during its lifetime. But clearly , mutation changes do not seem to allow for increase in fitness of the species as whole! Thw way nature solves this problem is by ensuring that during sexual reproduction when new
+offpsring are generated, there is a significant possibility for traits from either of the two parents to be passed on to the offspring, again as there is no regulatory procedure which trait gets passed on to which offspring is entirely stochastic however over a long time span the proportion of the benificial phenotype will be magnified
+since the organisms without the said benificial trait would have died out! This explains how evolution and extinction of species occurs in nature. This transfer of trait from the genes of the two parents is termed as "crossing-over" (a detailed description of the nomenclature would require a digression on meiosis which is the type of cell
+division occuring in the reproductive or "germinal" cells such as the sperm or the egg.) Intutively, one can think of the crossing over process in the following manner : keep two chromosomes next to each other take some alleles from one and interchange it with the other to get a certain resultant chromosome. This is also made clear in the figure below:
+
+</p>
+<p> <img src = "images/crossing_over.png" , alt = "crossing over"> <br> </p>
+  
+<p> The above image shows how crossing over occurs in genes during cell division. That's all the information we would need from biology. Now with the intution in place let's get to how we would be actually using "Genetic Algorithms" 
+  
+</p>
+
+<p> <h4> The formulation of Genetic Algorithms </h4> </p>
+
+<p>  Taking inpiration from our earlier discussion, our objective function should represent the environment in some sense and suppose we have a bunch of "solutions" or a <i> population </i> of initial candidates through evolution we should get a species that shows optimal <i> fitness </i> for our situation. 
+     To ensure that our formalism is consistent with the biological one, define a chromosome to be an array of possible values that represent our solution candidate. A gene is a certain index in our array and the value at that index is the allele. The set of chromosomes we have at one point can be said to
+     represent our genotype. The alleles themselves can be binary , integer or real valued depending on our choice of representation, our phenotype in this case represents the actual objective function and the values lying in its domain. We modify our genotype based on a fitness function that is designed to
+     ensure that our final genotype represents a phenotype that solves our objective function optimally. Lastly, noting that the genotype and phenotype may have entirely different sets of values forces us to contruct a mapping from the possible values of the phenotype to the genotype and back so that we can get 
+     the genotype behind a phenotype and a phenotype for a certain genotype. The following figures showcase our formalism.
+  
+  
+</p>
+
+<p>
+
+<img src = "images/ga_basic.JPG" , alt = "Representation"> <br>
+
+<img src = "images/ga_2.JPG" , alt = "Genotype to phenotype"> <br>
+</p>
+
+
+<p>
+  Naturally, the full power of our evolutionary mechanism wouldn't work without including the phenomena of <i> mutation </i> and <i> crossing-over </i>. We can do this in the following way, with a certain probability <i> M <sub> p </sub> </i>
+  we perform an operation on a chromsome such as swipping the values of two indices or randomly changing the value at a particular gene etc, such operations clearly are an analogue of mutation of natural genes. A crossing over now, is any operation that combines two chromosomes in a certain way to get a new resultant chromosome. Now, suppose we have an initial population, say <i> F <sub> 0 </sub> </i> after doing an initial fitness calculation we mutate individuals and then perform crossing-over to get a new population, <i> F <sub> 1 </sub> </i>.
+  Now, it may be the case that <i>F <sub> 1 </sub> </i> has much more individuals than <i>F <sub> 0 </sub> </i> in order to avoid increasing storage complexity with excessive redundant candidates, we take a leaf out of Darwin' book and only consider the <i> Fittest</i>, this so called <i> elitism </i>, is one of many selection procedures which are used to ensure that succesive generations have controllable population.
+  With the basic formalism sorted and remembering our intuition from Darwinian evolution, we can construct an algorithmic procedure for performing a Genetic Algorithm as follows : 
+</p>   
+<p> <img src = "images/ga_exec.JPG" , alt = "Execution of a Genetic Algorithm"> <br> </p>
+  
+  
+
+<p> <h4> Some tricks of the trade on How to implement a Genetic Algorithm </h4> </p>
+
+<p> <h5> How to initialize the population? </h5> </p>
+
+<p> We can choose to either populate our initial choices randomly or by employing a certain assumption. While the fomer method may converge much slowly after several rounds of experimental research it has been proven to converge to a more optimal solution, inutitively this is because the latter method has lesser "diversity" and thus can only show a certain number of possible phenotypes.
+The trick that is used commonly these days is to combine both methods, add several randomly initialized chromosomes while adding some "good" ones as well, this can cause the convergence to be fast while ensuring that the advnatge of randomization is not lost as well.
+</p> 
+
+
+<p> <h5> How to define a fitness measure? </h5> </p>
+<p> This is a very tricky issue since there isn't any standard way to define a fitness measure with the measure being highly specific to the task in hand. But here are some rough guidelines that work often in practice :
+</p>
+<ul>
+<li> A good fitness measure should be easy to evaluate i.e easy to compute, saving on the algorithm running time </li>
+
+<li> A good fitness measure should be as well-behaved as possible i.e properties such as continuity and differentiability are a big bonus and if the alleles are integer based or binary then a function like the digital sum i.e the sum of all non-zero values is a good choice if the problem allows
+
+<li> Most importantly, a good fitness measure should <i>mimic</i> the actual objective function i.e optimizing the fitness function in the genotype space should be equivalent to optimizing the objective in the phenotype space.
+ 
+</ul>
+<p> The last requirement is the most tricky, but also the most necessary one, otherwise our Genetic algorithm would simply not work!. In fact, the priority order to be followed is 3>2>1 when designing a fitness measure but it's crucial to ensure that we don't abandon lower priority requirements entirely.
+</p> 
+
+<p> <h5> How to choose Parents? </h5> </p>
+
+<p> To understand why we need this discussion in the first place, let's go back to the problem that motivated survival selection. Once we perform a crossing-over on the entire population we end up getting too many possibilities for the next generation! Apart from survival selection which is needed to reduce the storage complexity,
+We also need to reduce the time complexity of the crossing-over step somehow in order to get a practically fast algorithm. The easiest way to do this is by ensuring that we can choose the right sort of "parents". That is by performing the crossing over only on a certain subset of the population we can ensure that diversity is propagated optimally whilst
+not overburdening our resources this is inspired from nature too, specifically the phenomenon of <i>Sexual Selection</i> which was also discussed by Darwin in his seminal work, <i>On the orgin of Species </i>. The colourful plummage of peacocks for example is an evolutionary adaptation that allows for a peahen to slect an optimal mate.
+We would not go in to sexual selection in detail here, but there are a great many works out there that explain and illustrate this idea beautifully. To get back to the issue we have at hand, some strategies that are used in practice for parent slection are as follows :
+</p>
+
+<ul>
+<li>  <p> Fitness Proportionate Selection is one of the most popular ways of parent selection. In this every individual can become a parent with a probability which is proportional to its fitness. Therefore, fitter individuals have a higher chance of mating and propagating their features to the next generation. Therefore, such a selection strategy applies a selection pressure to the more fit individuals in the population, evolving better individuals over time.
+
+Consider a circular wheel. The wheel is divided into n pies, where n is the number of individuals in the population. Each individual gets a portion of the circle which is proportional to its fitness value.
+
+  Two implementations of fitness proportionate selection are used in standard practice  </p>
+<ol>
+
+  <li> <p> In a roulette wheel selection, the circular wheel is divided as described before. A fixed point is chosen on the wheel circumference as shown and the wheel is rotated. The region of the wheel which comes in front of the fixed point is chosen as the parent. For the second parent, the same process is repeated.
+    
+    It is clear that a fitter individual has a greater pie on the wheel and therefore a greater chance of landing in front of the fixed point when the wheel is rotated. Therefore, the probability of choosing an individual depends directly on its fitness.
+
+    Implementation wise, we use the following steps − </p>
+    
+    <ul> 
+       <li> Calculate S = the sum of a fitnesses </li>
+      <li>  Generate a random number between 0 and S. </li>
+      <li> <p> Starting from the top of the population, keep adding the finesses to the partial sum P, till P exceeds S </p> </li>
+      <li>  The individual for which P exceeds S is the chosen individual</li>
+    </ul>
+    
+    <p> The following image shows roulette wheel population. </p> 
+    
+    <p> <img src = "images/pa_1.JPG"> <br> </p>
+ </li>
+  
+  <li> <p> Stochastic Universal Sampling is quite similar to Roulette wheel selection, however instead of having just one fixed point, we have multiple fixed points as shown in the following image. Therefore, all the parents are chosen in just one spin of the wheel. Also, such a setup encourages the highly fit individuals to be chosen at least once.
+  
+    An image showcasing this procedure is as follows : </p>
+    
+    <p> <img src = "images/pa_2.JPG"> <br> </p>
+ </li> </ol>
+  
+ <p> It is to be noted that fitness proportionate selection methods don’t work for cases where the fitness can take a negative value. </p>
+  
+</li>
+
+<li>
+  <p> Our next strategy is the so called Tournament Selection. In K-Way tournament selection, we select K individuals from the population at random and select the best out of these to become a parent. The same process is repeated for selecting the next parent. Tournament Selection is also extremely popular in literature as it can even work with negative fitness values.
+    The following image showcases this strategy.
+  </p>
+  
+  <img src = "images/pa_3.JPG"> <br>
+  </li>
+  
+  <li> <p> We will now look at Rank Selection. Rank Selection also works with negative fitness values and is mostly used when the individuals in the population have very close fitness values (this happens usually at the end of the run). This leads to each individual having an almost equal share of the pie (like in case of fitness proportionate selection) as shown in the following image and hence each individual no matter how fit relative to each other has an approximately same probability of getting selected as a parent. This in turn leads to a loss in the selection pressure towards fitter individuals, making the GA to make poor parent selections in such situations. </p>
+    
+    <img src = "images/pa_4.JPG"> <br>
+    
+    <p>  In this, we remove the concept of a fitness value while selecting a parent. However, every individual in the population is ranked according to their fitness. The selection of the parents depends on the rank of each individual and not the fitness. The higher ranked individuals are preferred more than the lower ranked ones.</p>
+   
+    <img src = "images/pa_5.JPG"> <br>
+  </li>
+</ul>
+
+<p> <h5> How to perform mutations , crossing-over and Survival Selection?</h5> </p>
+
+<p> We would not go into detail on the procedure of performing mutations and crossing-over, simply because there are too many possibilites. The important thing is to note that for mutation with a certain probability we randomly change individual chromosomes and for 
+crossing-over we are expected to use two chromosomes in order to get a third one. There are many means to perform survival selection apart from the <i> elitism </i> discussed earlier there is also the <i> aging </i> procedure in which the indvidual from a certain generation 
+if it remains as such for a predetermined N  number of succesive generations then it will be automatically removed at the N+1 <sup> th </sup> succesive generation. This procedure clearly mimics the process of aging and death found in nature.
+There are even more means by which we can ensure that survival selection but the key point is to note that we trim the population after every generation. </p>
+
+<p> <h5>How to know that convergence has been achieved? </h5> </p>
+
+<p> It has been observed that initially, the Genetic Algorithm progresses very fast with better solutions coming in every few iterations, but this tends to saturate in the later stages where the improvements are very small. We usually want a termination condition such that our solution is close to the optimal, at the end of the run.
+
+Usually, we keep one of the following termination conditions : 
+
+<ul>
+  <li> When there has been no improvement in the population for X iterations.</li>
+  <li> When we reach a certain Y number of generations. </li>
+  <li> When the objective function value has reached a certain pre-defined value. </li>
+</ul>
+</p>
+
+<p> It is important to note that all the tricks discussed above are highly generic and that is upto the designer of the algorithm to ensure how they implement the algorithm for the problem in hand. Even so these rough guidelines, showcase a certain direction that can be kept in mind
+  for a designer to get a more efficient algorithm. </p>
+
+
+<h3> Demo Problem </h3>
+
+In this section, we solve a problem step by step using python code in order to illustrate the concepts that have been discussed above.
+  
   <p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications.</p>
 
   <h2>Simulated Annealing</h2>
