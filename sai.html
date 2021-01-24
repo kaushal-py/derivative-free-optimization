@@ -147,13 +147,113 @@ The above image shows how crossing over occurs in genes during cell division. Th
   
 </p>
 
-<h4> Some details on How to implement a Genetic Algorithm </h4>
+<h4> Some tricks of the trade on How to implement a Genetic Algorithm </h4>
+
+<h5> How to initialize the population? </h5>
+
+We can choose to either populate our initial choices randomly or by employing a certain assumption. While the fomer method may converge much slowly after several rounds of experimental research it has been proven to converge to a more optimal solution, inutitively this is because the latter method has lesser "diversity" and thus can only show a certain number of possible phenotypes.
+The trick that is used commonly these days is to combine both methods, add several randomly initialized chromosomes while adding some "good" ones as well, this can cause the convergence to be fast while ensuring that the advnatge of randomization is not lost as well.
+
+<h5> How to define a fitness measure? </h5>
+This is a very tricky issue since there isn't any standard way to define a fitness measure with the measure being highly specific to the task in hand. But here are some rough guidelines that work often in practice :
+<ul>
+<li> A good fitness measure should be easy to evaluate i.e easy to compute, saving on the algorithm running time </li>
+
+<li> A good fitness measure should be as well-behaved as possible i.e properties such as continuity and differentiability are a big bonus and if the alleles are integer based or binary then a function like the digital sum i.e the sum of all non-zero values is a good choice if the problem allows
+
+<li> Most importantly, a good fitness measure should <i>mimic</i> the actual objective function i.e optimizing the fitness function in the genotype space should be equivalent to optimizing the objective in the phenotype space.
+ 
+</ul>
+The last requirement is the most tricky, but also the most necessary one, otherwise our Genetic algorithm would simply not work!. In fact, the priority order to be followed is 3>2>1 when designing a fitness measure but it's crucial to ensure that we don't abandon lower priority requirements entirely.
+
+<h5> How to choose Parents? </h5>
+To understand why we need this discussion in the first place, let's go back to the problem that motivated survival selection. Once we perform a crossing-over on the entire population we end up getting too many possibilities for the next generation! Apart from survival selection which is needed to reduce the storage complexity,
+We also need to reduce the time complexity of the crossing-over step somehow in order to get a practically fast algorithm. The easiest way to do this is by ensuring that we can choose the right sort of "parents". That is by performing the crossing over only on a certain subset of the population we can ensure that diversity is propagated optimally whilst
+not overburdening our resources this is inspired from nature too, specifically the phenomenon of <i>Sexual Selection</i> which was also discussed by Darwin in his seminal work, <i>On the orgin of Species </i>. The colourful plummage of peacocks for example is an evolutionary adaptation that allows for a peahen to slect an optimal mate.
+We would not go in to sexual selection in detail here, but there are a great many works out there that explain and illustrate this idea beautifully. To get back to the issue we have at hand, some strategies that are used in practice for parent slection are as follows :
+  
+<ul>
+<li>  <p> Fitness Proportionate Selection is one of the most popular ways of parent selection. In this every individual can become a parent with a probability which is proportional to its fitness. Therefore, fitter individuals have a higher chance of mating and propagating their features to the next generation. Therefore, such a selection strategy applies a selection pressure to the more fit individuals in the population, evolving better individuals over time.
+
+Consider a circular wheel. The wheel is divided into n pies, where n is the number of individuals in the population. Each individual gets a portion of the circle which is proportional to its fitness value.
+
+  Two implementations of fitness proportionate selection are used in standard practice  </p>
+<ol>
+
+  <li> <p> In a roulette wheel selection, the circular wheel is divided as described before. A fixed point is chosen on the wheel circumference as shown and the wheel is rotated. The region of the wheel which comes in front of the fixed point is chosen as the parent. For the second parent, the same process is repeated.
+    
+    It is clear that a fitter individual has a greater pie on the wheel and therefore a greater chance of landing in front of the fixed point when the wheel is rotated. Therefore, the probability of choosing an individual depends directly on its fitness.
+
+    Implementation wise, we use the following steps − </p>
+    
+    <ul> 
+       <li> Calculate S = the sum of a fitnesses </li>
+      <li>  Generate a random number between 0 and S. </li>
+      <li> Starting from the top of the population, keep adding the finesses to the partial sum P, till P<S </li>
+      <li>  The individual for which P exceeds S is the chosen individual</li>
+    </ul>
+    
+    <p> The following image shows roulette wheel population. </p> 
+    
+    <img src = "images/pa_1.jpg"> <br>
+ </li>
+  
+  <li> <p> Stochastic Universal Sampling is quite similar to Roulette wheel selection, however instead of having just one fixed point, we have multiple fixed points as shown in the following image. Therefore, all the parents are chosen in just one spin of the wheel. Also, such a setup encourages the highly fit individuals to be chosen at least once.
+  
+    An image showcasing this procedure is as follows :
+    
+    <img src = "images/pa_2.jpg"> <br>
+ </p></li> </ol>
+  
+  It is to be noted that fitness proportionate selection methods don’t work for cases where the fitness can take a negative value.
+  
+</li>
+
+<li>
+  <p> Our next stragey is the so called Tournament Selection. In K-Way tournament selection, we select K individuals from the population at random and select the best out of these to become a parent. The same process is repeated for selecting the next parent. Tournament Selection is also extremely popular in literature as it can even work with negative fitness values.
+    The following image showcases this strategy.
+  </p>
+  
+  <img src = "images/pa_3.jpg"> <br>
+  </li>
+  
+  <li> <p> We will now look at Rank Selection. Rank Selection also works with negative fitness values and is mostly used when the individuals in the population have very close fitness values (this happens usually at the end of the run). This leads to each individual having an almost equal share of the pie (like in case of fitness proportionate selection) as shown in the following image and hence each individual no matter how fit relative to each other has an approximately same probability of getting selected as a parent. This in turn leads to a loss in the selection pressure towards fitter individuals, making the GA to make poor parent selections in such situations. </p>
+    
+    <img src = "images/pa_4.jpg"> <br>
+    
+    <p>  In this, we remove the concept of a fitness value while selecting a parent. However, every individual in the population is ranked according to their fitness. The selection of the parents depends on the rank of each individual and not the fitness. The higher ranked individuals are preferred more than the lower ranked ones.</p>
+   
+    <img src = "images/pa_5.jpg"> <br>
+  </li>
+</ul>
+
+<h5> How to perform mutations , crossing-over and Survival Selection?</h5>
+
+<p> We would not go into detail on the procedure of performing mutations and crossing-over, simply because there are too many possibilites. The important thing is to note that for mutation with a certain probability we randomly change individual chromosomes and for 
+crossing-over we are expected to use two chromosomes in order to get a third one. There are many means to perform survival selection apart from the <i> elitism </i> discussed earlier there is also the <i> aging </i> procedure in which the indvidual from a certain generation 
+if it remains as such for a predetermined N  number of succesive generations then it will be automatically removed at the N+1 <sup> th </sup> succesive generation. This procedure clearly mimics the process of aging and death found in nature.
+There are even more means by which we can ensure that survival selection but the key point is to note that we trim the population after every generation. </p>
+
+<h5>How to know that convergence has been acheived? </h5>
+
+<p> It has been observed that initially, the Genetic Algorithm progresses very fast with better solutions coming in every few iterations, but this tends to saturate in the later stages where the improvements are very small. We usually want a termination condition such that our solution is close to the optimal, at the end of the run.
+
+Usually, we keep one of the following termination conditions : 
+
+<ul>
+  <li> When there has been no improvement in the population for X iterations.</li>
+  <li> When we reach a certain Y number of generations. </li>
+  <li> When the objective function value has reached a certain pre-defined value. </li>
+</ul>
+</p>
+
+It is important to note that all the tricks discussed above are highly generic and that is upto the designer of the algorithm to ensure how they implement the algorithm for the problem in hand. Even so these rough guidelines, showcase a certain direction that can be kept in mind
+for a designer to get a more efficient algorithm.
 
 
+<h3> Demo Problem </h3>
 
-  
-  
-  
+In this section, we solve a problem step by step using python code in order to illustrate the concepts that have been discussed above.
   
   <p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications.</p>
 
