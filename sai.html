@@ -115,10 +115,10 @@ offpsring are generated, there is a significant possibility for traits from eith
 since the organisms without the said benificial trait would have died out! This explains how evolution and extinction of species occurs in nature. This transfer of trait from the genes of the two parents is termed as "crossing-over" (a detailed description of the nomenclature would require a digression on meiosis which is the type of cell
 division occuring in the reproductive or "germinal" cells such as the sperm or the egg.) Intutively, one can think of the crossing over process in the following manner : keep two chromosomes next to each other take some alleles from one and interchange it with the other to get a certain resultant chromosome. This is also made clear in the figure below:
 
-  
+</p>
 <img src = "images/crossing_over.png" , alt = "crossing over"> <br>
   
-The above image shows how crossing over occurs in genes during cell division. That's all the information we would need from biology. Now with the intution in place let's get to how we would be actually using "Genetic Algorithms" 
+<p> The above image shows how crossing over occurs in genes during cell division. That's all the information we would need from biology. Now with the intution in place let's get to how we would be actually using "Genetic Algorithms" 
   
 </p>
 
@@ -133,32 +133,34 @@ The above image shows how crossing over occurs in genes during cell division. Th
   
 </p>
   
-<p> <img src = "images/ga_basic.JPG" , alt = "Representation"> <br>
+<img src = "images/ga_basic.JPG" , alt = "Representation"> <br>
 
 <img src = "images/ga_2.JPG" , alt = "Genotype to phenotype"> <br>
 
-</p>
+
 
 <p>
   Naturally, the full power of our evolutionary mechanism wouldn't work without including the phenomena of <i> mutation </i> and <i> crossing-over </i>. We can do this in the following way, with a certain probability $$M_{p}$$ perform an operation on a chromsome such as swipping the values of two indices or randomly changing
   the value at a particular gene etc, such operations clearly are an analogue of mutation of natural genes. A crossing over now, is any operation that combines two chromosomes in a certain way to get a new resultant chromosome. Now, suppose we have an initial population, say $$F_{0}$$ after doing an initial fitness calculation we mutate individuals and then perform crossing-over to get a new population, $$F_{1}$$.
   Now, it may be the case that $$F_{1}$$ has much more individuals than $$F_{0}$$ in order to avoid increasing storage complexity with excessive redundant candidates, we take a leaf out of Darwin' book and only consider the <i> Fittest</i>, this so called <i> elitism </i>, is one of many selection procedures which are used to ensure that succesive generations have controllable population.
   With the basic formalism sorted and remembering our intuition from Darwinian evolution, we can construct an algorithmic procedure for performing a Genetic Algorithm as follows : 
-  
+</p>   
   <img src = "images/ga_exec.JPG" , alt = "Execution of a Genetic Algorithm"> <br>
   
   
-</p>
 
 <h4> Some tricks of the trade on How to implement a Genetic Algorithm </h4>
 
 <h5> How to initialize the population? </h5>
 
-We can choose to either populate our initial choices randomly or by employing a certain assumption. While the fomer method may converge much slowly after several rounds of experimental research it has been proven to converge to a more optimal solution, inutitively this is because the latter method has lesser "diversity" and thus can only show a certain number of possible phenotypes.
+<p> We can choose to either populate our initial choices randomly or by employing a certain assumption. While the fomer method may converge much slowly after several rounds of experimental research it has been proven to converge to a more optimal solution, inutitively this is because the latter method has lesser "diversity" and thus can only show a certain number of possible phenotypes.
 The trick that is used commonly these days is to combine both methods, add several randomly initialized chromosomes while adding some "good" ones as well, this can cause the convergence to be fast while ensuring that the advnatge of randomization is not lost as well.
+</p> 
+
 
 <h5> How to define a fitness measure? </h5>
-This is a very tricky issue since there isn't any standard way to define a fitness measure with the measure being highly specific to the task in hand. But here are some rough guidelines that work often in practice :
+<p> This is a very tricky issue since there isn't any standard way to define a fitness measure with the measure being highly specific to the task in hand. But here are some rough guidelines that work often in practice :
+</p>
 <ul>
 <li> A good fitness measure should be easy to evaluate i.e easy to compute, saving on the algorithm running time </li>
 
@@ -167,14 +169,15 @@ This is a very tricky issue since there isn't any standard way to define a fitne
 <li> Most importantly, a good fitness measure should <i>mimic</i> the actual objective function i.e optimizing the fitness function in the genotype space should be equivalent to optimizing the objective in the phenotype space.
  
 </ul>
-The last requirement is the most tricky, but also the most necessary one, otherwise our Genetic algorithm would simply not work!. In fact, the priority order to be followed is 3>2>1 when designing a fitness measure but it's crucial to ensure that we don't abandon lower priority requirements entirely.
-
+<p> The last requirement is the most tricky, but also the most necessary one, otherwise our Genetic algorithm would simply not work!. In fact, the priority order to be followed is 3>2>1 when designing a fitness measure but it's crucial to ensure that we don't abandon lower priority requirements entirely.
+</p> 
 <h5> How to choose Parents? </h5>
-To understand why we need this discussion in the first place, let's go back to the problem that motivated survival selection. Once we perform a crossing-over on the entire population we end up getting too many possibilities for the next generation! Apart from survival selection which is needed to reduce the storage complexity,
+<p> To understand why we need this discussion in the first place, let's go back to the problem that motivated survival selection. Once we perform a crossing-over on the entire population we end up getting too many possibilities for the next generation! Apart from survival selection which is needed to reduce the storage complexity,
 We also need to reduce the time complexity of the crossing-over step somehow in order to get a practically fast algorithm. The easiest way to do this is by ensuring that we can choose the right sort of "parents". That is by performing the crossing over only on a certain subset of the population we can ensure that diversity is propagated optimally whilst
 not overburdening our resources this is inspired from nature too, specifically the phenomenon of <i>Sexual Selection</i> which was also discussed by Darwin in his seminal work, <i>On the orgin of Species </i>. The colourful plummage of peacocks for example is an evolutionary adaptation that allows for a peahen to slect an optimal mate.
 We would not go in to sexual selection in detail here, but there are a great many works out there that explain and illustrate this idea beautifully. To get back to the issue we have at hand, some strategies that are used in practice for parent slection are as follows :
-  
+</p>
+
 <ul>
 <li>  <p> Fitness Proportionate Selection is one of the most popular ways of parent selection. In this every individual can become a parent with a probability which is proportional to its fitness. Therefore, fitter individuals have a higher chance of mating and propagating their features to the next generation. Therefore, such a selection strategy applies a selection pressure to the more fit individuals in the population, evolving better individuals over time.
 
