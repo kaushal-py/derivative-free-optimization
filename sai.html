@@ -120,7 +120,36 @@ The above image shows how crossing over occurs in genes during cell division. Th
 </p>
 
 <h4> The formulation of Genetic Algorithms </h4>
+
+<p>  Taking inpiration from our earlier discussion, our objective function should represent the environment in some sense and suppose we have a bunch of "solutions" or a <i> population </i> of initial candidates through evolution we should get a species that shows optimal <i> fitness </i> for our situation. 
+     To ensure that our formalism is consistent with the biological one, define a chromosome to be an array of possible values that represent our solution candidate. A gene is a certain index in our array and the value at that index is the allele. The set of chromosomes we have at one point can be said to
+     represent our genotype. The alleles themselves can be binary , integer or real valued depending on our choice of representation, our phenotype in this case represents the actual objective function and the values lying in its domain. We modify our genotype based on a fitness function that is designed to
+     ensure that our final genotype represents a phenotype that solves our objective function optimally. Lastly, noting that the genotype and phenotype may have entirely different sets of values forces us to contruct a mapping from the possible values of the phenotype to the genotype and back so that we can get 
+     the genotype behind a phenotype and a phenotype for a certain genotype. The following figures showcase our formalism.
   
+  
+</p>
+  
+<p> <img src = "images/ga_basic.jpg" , alt = "Representation"> <br>
+
+<img src = "images/ga_2.jpg" , alt = "Genotype to phenotype"> <br>
+
+</p>
+
+<p>
+  Naturally, the full power of our evolutionary mechanism wouldn't work without including the phenomena of <i> mutation </i> and <i> crossing-over </i>. We can do this in the following way, with a certain probability $M_{p}$ perform an operation on a chromsome such as swipping the values of two indices or randomly changing
+  the value at a particular gene etc, such operations clearly are an analogue of mutation of natural genes. A crossing over now, is any operation that combines two chromosomes in a certain way to get a new resultant chromosome. With this sorted and remembering our intuition from Darwinian evolution, we can construct an algorithmic procedure for 
+  performing a Genetic Algorithm as follows : 
+  
+  <img src = "images/ga_exec.jpg" , alt = "Execution of a Genetic Algorithm"> <br>
+  
+  
+</p>
+
+<h4> Some details on How to implement a Genetic Algorithm </h4>
+
+
+
   
   
   
