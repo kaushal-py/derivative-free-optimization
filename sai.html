@@ -15,9 +15,11 @@
   
   <h3> Optimization - a very , very brief primer! </h3>
   
-  So really, what is optimization? Since this post talks about <i> Derivative - Free Optimization </i> so to speak, it is assumed that the reader is familiar with the basics of optimization. If you are not, no need to fret thi section provides a very, very brief intro, frankly, 
+ <p>  So really, what is optimization? Since this post talks about <i> Derivative - Free Optimization </i> so to speak, it is assumed that the reader is familiar with the basics of optimization. If you are not, no need to fret thi section provides a very, very brief intro, frankly, 
   there is no need as such to have a thorough foundation on the underlying mechanism of optimization to understand the following discussion. But like many frameworks, the entire reason why Derivative free methods exist, such as the ones discussed here, Genetic Algorithms and Simulated Annealing
   is based on some of the issues encountered in the old-school methods. So it would be a great idea to have some superficial understanding of what's going on, just so that we can appreciate the innovative ideas that have solved them </p>
+  
+  </p>
   
   <p> Now, to business. Optimization at a very , very basic level is to solve a certain problem <i> optimally </i>. For example, if you have your final exams for the semester, How would you try to maximize your marks? Or how would a logistics company
       decide to deliver parcels in a particular city while ensuring that it takes the least amount of time ad fuel , cause well, time is money and gasoline ain't cheap! There are many, many such problems at the heart of the modern world
@@ -26,9 +28,9 @@
       One such bottleneck that has stymied the devolopment of better algorithms has been the over-reliance on <i> "derivatives" </i>. An enormous majority of today's optimization algorithms including those balmy Neural - Networks rely a great deal on <i> Derivative </i> based
       methods. To understand what a derivative based method does is that given some function that you want to optimize (<i> henceforth : the objective function </i>) say, $$ f(x) $$
       it uses its derivative to get some information to reach the optimal solution. High school math is enough to let us know that $$ f'(x) = 0 $$ at an extremum and a basic knowledge of multivariable calculus extends this to $$ \nabla f(\bf{x}) = \bf{0} $$
-      If you want more information to <i> converge </i> faster to a solution, then you can use higher derivatives. Modern methods like Automatic Differentiation makes computing derivatives easy and since the algorithms using these
+      If you want more information to <i> converge </i> faster to a solution, then you can use higher derivatives or their approximations. Modern methods like Automatic Differentiation makes computing derivatives easy and since the algorithms using these
       are straightforward to implement and have robust guarantees of <i> "converging" </i> , they are used quite a great deal. Even so, they do suffer from certain issues that necessitates the ideas discussed in our post. We will be looking into those in the next section, and that's all for
-      the basics of Optimization. For a more detailed introduction, there are some great videos and courses out there on You tube , not to mention the bible - Numerical Optimization by Nocedal and Wright which is a great read but a bit too mathy which might be off-putting for first time readers.
+      the basics of Optimization. For a more detailed introduction on optimization and derivative based methods, there are some great videos and courses out there on You tube , not to mention the bible - Numerical Optimization by Nocedal and Wright which is a great read but a bit too mathy which might be off-putting for first time readers.
     
 </p>
 
@@ -39,34 +41,32 @@
     
   </p>
   
-  <p> The above figure shows a realistic situation that happens when we  </p>
-
-  <p>TODO: Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni ad esse odio repudiandae quidem porro, laborum vel aspernatur praesentium deleniti quaerat commodi blanditiis, natus cum impedit aperiam voluptatem architecto. Maiores.</p>
-  <h3>Subheading</h3>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio dolor delectus tenetur ex quibusdam esse voluptatibus corrupti incidunt, suscipit inventore, ducimus fugit sunt in ipsam ratione. Deserunt dolor eius minima.</p>
-  <h4>Sub-subheading</h4>
-  <p>Math equations inline can be written as: \( a=b+c+\dfrac{e}{f} \). Check index.html (line 28) for syntax.</p>
-  <p>Write Block level math equations using double dollars. 
-    $$ a \cdot x^2 + b \cdot x + c = 0 $$
+  <p> The above figure shows a realistic situation that happens when we use Derivative based methods. If you could recall from above, the idea behind derivative based methods is to use characteristics
+      of the derivatives of the objective function to get closer to an optimal value. This works quite well for your usual sort of functions that are well behaved such as convex functions ("Bowl shaped functions" : Your task 
+      is to reach the bottom of the bowl, the derivative provides the direction of steepest descent and then whoosh! Off you go! Just to see why this is so fast, take a bowl and use your fingers to replicate the process, you woulkd reach the bottom in no time!) b
+      but goes wonky for other functions that are not so well behaved. This is because "derivatives" are unable to distinguish between <i> locally </i> and <i> globally </i> optimal solutions. 
+           
   </p>
 
-  <p>Template for inserting code</p>
-  <dt-code block language="python">
-    import numpy as np
-    import matplotlib.pyplot as plt
+  <p> To understand what this means, look at the figure above, Suppose you are a mountaineer out to conquer the highest mountain on a range, you have got a bunch of peaks there on your landscape. Look at the point labelled <i> Start Here Randomly </i>, what derivative based methods would do is to start climbing upward,
+      they would ensure that you get to the top of the nearest hill, but then you're stuck! You can't take a single step ahead because the derivatve which is sort of a slope monitor tells you that the terrain doesn't go upward from here !
+      So according to your monitor you have reached the peak, but you being a well-prepared person have already done your survey and are aware beforehand that there is a much higher peak ahead! So now you are stuck and angry, but fret not
+     there were many others in the same fix as you were while going through different applications in engineering and science, applications that are quite necessary to the functioning of various aspects of society that we take for granted today.
+     So the answer to this problem is to include an entirely new monitor to understand the terrain - i.e, to consciously chose to avoid using the <i> derivative </i> which is why these methods are called derivative-free methods.
+     There are other reasons to adopt derivative-free based methods but they are mostly <i> computational </i> in nature i.e relate to the problems encountered in getting the derivative in the first place. The above discussed "landscape problem "
+     shows on the other hand a much more intuitive need for going "beyond" the derivative in the first place. Many of the methods we will discuss below are often grouped together in the banner of <i> meta-heuristics </i> (Meta : Latin for beyond,
+     heuristics - methodology of solving a problem, in this case referring to the derivative based methods.) 
+    
+</p>
 
-    x = np.arange(10)
-    y = np.arange(10)+np.random.randn(10)
-    plt.plot(x, y)
-    plt.show()
-  </dt-code>
-  <p>
-    Add images / gifs as following:
-    <img src="images/demofig.png" alt="demo image">
-  </p>
+<p> Now, that we have a certain need for Derivative free methods. Let's get cracking ! </p>
+
+
+<h3> Genetic Algorithms </h3>
+
+
   
   
-  <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Et ad, ducimus dolorum nisi quidem inventore. Pariatur illo quis quia ratione provident labore id? Ea reiciendis saepe dolore commodi expedita placeat.</p>
   <p>We can also cite <dt-cite key="gregor2015draw"></dt-cite> external publications.</p>
 
   <h2>Simulated Annealing</h2>
