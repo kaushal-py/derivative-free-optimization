@@ -153,14 +153,14 @@ division occuring in the reproductive or "germinal" cells such as the sperm or t
 
 <p> <h4> Some tricks of the trade on How to implement a Genetic Algorithm </h4> </p>
 
-<p> <h5> How to initialize the population? </h5> </p>
+<h5> <p>  How to initialize the population? </p> </h5> 
 
 <p> We can choose to either populate our initial choices randomly or by employing a certain assumption. While the fomer method may converge much slowly after several rounds of experimental research it has been proven to converge to a more optimal solution, inutitively this is because the latter method has lesser "diversity" and thus can only show a certain number of possible phenotypes.
 The trick that is used commonly these days is to combine both methods, add several randomly initialized chromosomes while adding some "good" ones as well, this can cause the convergence to be fast while ensuring that the advnatge of randomization is not lost as well.
 </p> 
 
 
-<p> <h5> How to define a fitness measure? </h5> </p>
+<h5> <p>  How to define a fitness measure?  </p> </h5>
 <p> This is a very tricky issue since there isn't any standard way to define a fitness measure with the measure being highly specific to the task in hand. But here are some rough guidelines that work often in practice :
 </p>
 <ul>
@@ -174,7 +174,7 @@ The trick that is used commonly these days is to combine both methods, add sever
 <p> The last requirement is the most tricky, but also the most necessary one, otherwise our Genetic algorithm would simply not work!. In fact, the priority order to be followed is 3>2>1 when designing a fitness measure but it's crucial to ensure that we don't abandon lower priority requirements entirely.
 </p> 
 
-<p> <h5> How to choose Parents? </h5> </p>
+<h5> <p> How to choose Parents? </p> </h5>
 
 <p> To understand why we need this discussion in the first place, let's go back to the problem that motivated survival selection. Once we perform a crossing-over on the entire population we end up getting too many possibilities for the next generation! Apart from survival selection which is needed to reduce the storage complexity,
 We also need to reduce the time complexity of the crossing-over step somehow in order to get a practically fast algorithm. The easiest way to do this is by ensuring that we can choose the right sort of "parents". That is by performing the crossing over only on a certain subset of the population we can ensure that diversity is propagated optimally whilst
@@ -237,7 +237,7 @@ Consider a circular wheel. The wheel is divided into n pies, where n is the numb
   </li>
 </ul>
 
-<p> <h5> How to perform mutations , crossing-over and Survival Selection?</h5> </p>
+<h5><p> How to perform mutations , crossing-over and Survival Selection? </p> </h5>
 
 <p> We would not go into detail on the procedure of performing mutations and crossing-over, simply because there are too many possibilites. The important thing is to note that for mutation with a certain probability we randomly change individual chromosomes and for 
 crossing-over we are expected to use two chromosomes in order to get a third one. There are many means to perform survival selection apart from the <i> elitism </i> discussed earlier there is also the <i> aging </i> procedure in which the indvidual from a certain generation 
@@ -261,7 +261,7 @@ Usually, we keep one of the following termination conditions :
   for a designer to get a more efficient algorithm. </p>
 
 
-<h3> Demo Problem </h3>
+<h3> <p>  Demo Problem  </p> </h3>
 
 In this section, we solve a problem step by step using python code in order to illustrate the concepts that have been discussed above.
   
