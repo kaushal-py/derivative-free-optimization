@@ -43,7 +43,13 @@
 </p>
 
 <h3> Why do we need Derivative free methods? </h3>
-<p> <img src="images/ga_motivation.jpg" alt="GA">
+<p> 
+
+  <figure class="center">
+    <img src="images/ga_motivation.jpg" alt="GA">
+    <figcaption>Motivation for Genetic Algorithms<dt-cite key="tpoint"></dt-cite>
+    </figcaption>
+  </figure>
   
   <br>
     
@@ -75,7 +81,14 @@
 <p> Before we begin, We would like to state that the <i> phenomenon </i> of optimization is far more general than we thought. While the way in which humans perform decision making can be modelled as an optimization scenario, the broader behaviour of nature may be modelled 
     through an optimization perspective as well. To understand what we are trying to say, look at the figure below
 </p> 
-<p>   <img src="images/pso.JPG" alt="PSO"> <br> </p>
+<p>  
+  <figure class="center">
+    <img src="images/pso.JPG" alt="PSO">
+    <figcaption>Conceptual model of finding best visited point <dt-cite key="swarm"></dt-cite>
+    </figcaption>
+  </figure>
+  <br>
+</p>
   
   <p> The image shows a flock of birds trying to find some fruit to eat. From observation, people observed that any movement of the flock followed three simple rules : 
 </p> 
@@ -122,7 +135,11 @@ since the organisms without the said benificial trait would have died out! This 
 division occuring in the reproductive or "germinal" cells such as the sperm or the egg.) Intuitively, one can think of the crossing over process in the following manner : keep two chromosomes next to each other take some alleles from one and interchange it with the other to get a certain resultant chromosome. This is also made clear in the figure below:
 
 </p>
-<p> <img src = "images/crossing_over.png" , alt = "crossing over"> <br> </p>
+<p> <figure class="center">
+  <img src = "images/crossing_over.png" , alt = "crossing over">
+  <figcaption>Crossover<dt-cite key="tpoint"></dt-cite>
+  </figcaption>
+</figure> <br> </p>
   
 <p> The above image shows how crossing over occurs in genes during cell division. That's all the information we would need from biology. Now with the intution in place let's get to how we would be actually using "Genetic Algorithms" 
   
@@ -140,10 +157,17 @@ division occuring in the reproductive or "germinal" cells such as the sperm or t
 </p>
 
 <p>
-
-<img src = "images/ga_basic.JPG" , alt = "Representation"> <br>
-
-<img src = "images/ga_2.JPG" , alt = "Genotype to phenotype"> <br>
+  <figure class="center">
+    <img src = "images/ga_basic.JPG" , alt = "Representation">
+    <figcaption>Genome Representation<dt-cite key="tpoint"></dt-cite>
+    </figcaption>
+  </figure> <br>
+  <figure class="center">
+    <img src = "images/ga_2.JPG" , alt = "Genotype to phenotype">
+    <figcaption>Genotype to phenotype<dt-cite key="tpoint"></dt-cite>
+    </figcaption>
+  </figure>
+ <br>
 </p>
 
 
@@ -153,7 +177,14 @@ division occuring in the reproductive or "germinal" cells such as the sperm or t
   Now, it may be the case that <i>F <sub> 1 </sub> </i> has much more individuals than <i>F <sub> 0 </sub> </i> in order to avoid increasing storage complexity with excessive redundant candidates, we take a leaf out of Darwin' book and only consider the <i> Fittest</i>, this so called <i> elitism </i>, is one of many selection procedures which are used to ensure that succesive generations have controllable population.
   With the basic formalism sorted and remembering our intuition from Darwinian evolution, we can construct an algorithmic procedure for performing a Genetic Algorithm as follows : 
 </p>   
-<p> <img src = "images/ga_exec.JPG" , alt = "Execution of a Genetic Algorithm"> <br> </p>
+<p>
+  <figure class="center">
+    <img src = "images/ga_exec.JPG" , alt = "Execution of a Genetic Algorithm">
+    <figcaption>Execution of a Genetic Algorithm<dt-cite key="tpoint"></dt-cite>
+    </figcaption>
+  </figure>
+ <br> 
+</p>
   
   
 
@@ -211,14 +242,24 @@ Consider a circular wheel. The wheel is divided into n pies, where n is the numb
     
     <p> The following image shows roulette wheel population. </p> 
     
-    <p> <img src = "images/pa_1.JPG"> <br> </p>
+    <p> <figure class="center">
+      <img src = "images/pa_1.JPG">
+      <figcaption>Roulette wheel selection<dt-cite key="tpoint"></dt-cite>
+      </figcaption>
+    </figure>
+   <br> </p>
  </li>
   
   <li> <p> Stochastic Universal Sampling is quite similar to Roulette wheel selection, however instead of having just one fixed point, we have multiple fixed points as shown in the following image. Therefore, all the parents are chosen in just one spin of the wheel. Also, such a setup encourages the highly fit individuals to be chosen at least once.
   
     An image showcasing this procedure is as follows : </p>
     
-    <p> <img src = "images/pa_2.JPG"> <br> </p>
+    <p> <figure class="center">
+      <img src = "images/pa_2.JPG">
+      <figcaption>Stochastic Universal Sampling<dt-cite key="tpoint"></dt-cite>
+      </figcaption>
+    </figure>
+   <br> </p>
  </li> </ol>
   
  <p> It is to be noted that fitness proportionate selection methods don’t work for cases where the fitness can take a negative value. </p>
@@ -230,16 +271,31 @@ Consider a circular wheel. The wheel is divided into n pies, where n is the numb
     The following image showcases this strategy.
   </p>
   
-  <img src = "images/pa_3.JPG"> <br>
+  <p> <figure class="center">
+    <img src = "images/pa_3.JPG">
+    <figcaption>Tournament Selction<dt-cite key="tpoint"></dt-cite>
+    </figcaption>
+  </figure>
+ <br> </p>
   </li>
   
   <li> <p> We will now look at Rank Selection. Rank Selection also works with negative fitness values and is mostly used when the individuals in the population have very close fitness values (this happens usually at the end of the run). This leads to each individual having an almost equal share of the pie (like in case of fitness proportionate selection) as shown in the following image and hence each individual no matter how fit relative to each other has an approximately same probability of getting selected as a parent. This in turn leads to a loss in the selection pressure towards fitter individuals, making the GA to make poor parent selections in such situations. </p>
     
-    <img src = "images/pa_4.JPG"> <br>
+    <p> <figure class="center">
+      <img src = "images/pa_4.JPG">
+      <figcaption>Rank Selction<dt-cite key="tpoint"></dt-cite>
+      </figcaption>
+    </figure>
+   <br> </p>
     
     <p>  In this, we remove the concept of a fitness value while selecting a parent. However, every individual in the population is ranked according to their fitness. The selection of the parents depends on the rank of each individual and not the fitness. The higher ranked individuals are preferred more than the lower ranked ones.</p>
    
-    <img src = "images/pa_5.JPG"> <br>
+    <p> <figure class="center">
+      <img src = "images/pa_5.JPG">
+      <figcaption>Rank Selction<dt-cite key="tpoint"></dt-cite>
+      </figcaption>
+    </figure>
+   <br> </p>
   </li>
 </ul>
 
@@ -272,7 +328,12 @@ Usually, we keep one of the following termination conditions :
   <p><p> In this section, we solve a problem step by step using python code in order to illustrate the concepts that have been discussed above. Let us look at the graph of a simple 1-D function. $$f(x) = sin(x)+sin(\dfrac{10x}{3})$$ </p>
 
   <p>
+    <figure class="center">
     <img src="images/ga_example_function.png" alt="ga demo">
+      <figcaption>A non-convex function
+      </figcaption>
+    </figure>
+   <br> 
   </p>
 
    <p>The function has 4 local minimas in the range (0, 8). Gradient-based methods are very efficient methods to find local minimas. But, such algorithms would fail when presented with such a function and asked to find the global minima. It will heavily depend on the starting condition, if the solution found is global or not. For this example, if the initial point was in the range (4.5 , 6) it would find the global minima. </p>
@@ -660,7 +721,12 @@ Number of generations taken: 10
 <p>Great! The solution matches with the actual global minima. Let us visualize how the genetic algorithm performs as the generations progress.</p>
 
 <p>
-  <img src="images/demo.gif" alt="ga demo">
+  <figure class="center">
+    <img src="images/demo.gif" alt="ga demo">
+    <figcaption>Population animation over generations
+    </figcaption>
+  </figure>
+ <br>
 </p>
 
 <p>It is clearly seen that the candidates keep getting better as the generations progress and finally all of them converge to the global minima, which is when the algorithm stops.</p>
@@ -670,20 +736,32 @@ Number of generations taken: 10
 
 <h2>Simulated Annealing</h2>
   <p>Simulated Annealing is another metaheuristic based method of optimization inspired by a natural phenomenon like Genetic Algorithm. While genetic algorithms are inspired by biological evolution, simulated annealing is motivated by the metallurgical process of annealing. When a piece of metal is heated, its potential energy increases and crystal structures become randomized. As it is cooled the mobility of atoms decreases and crystal structures start forming. The nature of crystals formed depends on the rate of cooling. If cooled slowly there is enough time for crystal growth and ordered crystal structues are formed, whereas if cooled very fast, a randomized structure is obtained as there is no time for the crystals to grow.   </p>
-  <p>
+  
     
-    <img src="images/fast vs slow annealing.png" alt="demo image">  
+    <figure class="center">
+      <img src="images/fast vs slow annealing.png" alt="demo image"> 
+      <figcaption>Fast vs Slow Annealing<dt-cite key="fastslow"></dt-cite>
+      </figcaption>
+    </figure>
+     
     <br>
+
+    <p>
     Left image shows randomzied crystals due to fast cooling whereas the right image shows ordered crystals when cooled slowly
   </p>
   <h3>Optimization Ideas </h3>
   <h4>Energy Distribution</h4>
   <p>Any system in thermal equilibrium at temperature T has its energy distributed according to the Boltzman distribution. The ratio of probabilities of state i and j depends only on the energy difference of the two states. 
    $$ \dfrac {p_i} {p_j} = e^{- \dfrac {\Delta E} {KT} } $$
+  </p>
+   <figure class="center">
+    <img src="images/Boltzmann.png" alt="demo image">  
+    <figcaption>Energy Distribution<dt-cite key="boltz"></dt-cite>
+    </figcaption>
+  </figure>
+  <br>
   <p>
-  <img src="images/Boltzmann.png" alt="demo image">  
-    <br>
-    We observe that as the temperature falls, the probability ratio tends towards 0. This means that probability of state i becomes extremely low and the entire energy can be deterministically said to be at state j. This transition happens more rapidly when the energy difference between the states is large. This is intuitive too as the randomness is present only in nearby states unless temperature is very high.
+    We observe that as the temperature falls, the probability ratio tends towards 0. This means that probability of state i becomes extremely low and the entire energy can be deterministically said to be at state j. This transition happens more rapidly when the energy difference between the states is large. This is intuitive too as the randomness is present only in nearby states unless temperature is very high. </p>
     <h4>Translating ideas into algorithm</h4>
     <p>
     Imagine now we wish to minimize a multimodal function in a certain search space. The function can be either discrete or continuous. We choose a certain initial point x0 and a high temperature parameter value T0. Now, we generate another point in the neighbourhood of the initial point x1. We can imagine these points as states and the value of the function at these points to be their corresponding energies say f(x0) and f(x1). Now we have to decide if we should move to point x1 or reject it. If the value of the function decreases we accept it similar to other search methods. On the other hand, if the value of the function increases we don't reject it straight away as we would do with conventional algorithms. Instead we reject it with a probability. This enables the algorithm to not get stuck at a local minima as sometimes steps are taken which increases function value. To control the rejection probability we model it by the Boltzmann distribution parametrized by a temperature parameter. Initially when temperature is high, exploration of state space is high but as the temperature decreases it accepts lesser and lesser values when function value increases and ultimately homes in on a certain minima. If the temperature is reduced slowly, enough exploration is done, so most likely it will find the global minima approximately.</p>
@@ -796,6 +874,65 @@ while k < kmax and T0 > 1e-5:
     <p>We observe that the closer initial value is to the global minima, lesser is the number of steps required</p>
     <img src="images/x1.gif" alt="demo image" width="30%" height="30%">  <img src="images/x25.gif" alt="demo image" width="30%" height="30%"> <img src="images/x6.gif" alt="demo image" width="30%" height="30%"> 
     <br>
-
-    <p>-By R Sainiranjan, Sayantan Halder and Kaushal Bhogale</p>
+    </p>
+ 
 </dt-article>
+
+<dt-appendix>
+  <p>-By R Sainiranjan, Sayantan Halder and Kaushal Bhogale</p>
+</dt-appendix>
+
+<script type="text/bibliography">
+ 
+  @online{tpoint,
+    title={Genetic Algorithms Tutorial},
+    author={Tutorialspoint.com},
+    url={https://www.tutorialspoint.com/genetic_algorithms/index.htm}
+  },
+
+  @online{swarm,
+    title={A Novel Numerical Optimization Algorithm Inspired from Particles: Particle Swarm Optimization},
+    author={transpireonline.blog},
+    year={2019},
+    url={https://transpireonline.blog/2019/07/03/a-novel-numerical-optimization-algorithm-inspired-from-particles-particle-swarm-optimization/}
+  },
+
+  @online{boltz,
+    title={Boltzman Distribution Graph},
+    author={Wikimedia},
+    url={https://upload.wikimedia.org/wikipedia/commons/b/bd/Boltzmann_distribution_graph.svg}
+  },
+
+  @article{fastslow,
+    title={Simlated Annealing},
+    author={Wikimedia},
+    url={https://upload.wikimedia.org/wikipedia/commons/8/8d/SimulatedAnnealingSlow.jpg},
+  },
+
+</script>
+
+<!-- <script type="text/bibliography">
+  @article{swarm,
+    title={A Novel Numerical Optimization Algorithm Inspired from Particles: Particle Swarm Optimization},
+    url={https://transpireonline.blog/2019/07/03/a-novel-numerical-optimization-algorithm-inspired-from-particles-particle-swarm-optimization/},
+  },
+
+  @article{tpoint,
+    title={Linear Programming},
+    author={George B. Dantzig},
+    journal={Operations Research},
+    year={2002},
+    url={https://www.tutorialspoint.com/genetic_algorithms/index.htm}
+  },
+
+  @article{fastslow,
+    title={Simlated Annealing},
+    url={https://upload.wikimedia.org/wikipedia/commons/8/8d/SimulatedAnnealingSlow.jpg},
+  },
+
+  @article{boltz,
+    title={Boltzman Distribution Graph},
+    url={https://upload.wikimedia.org/wikipedia/commons/b/bd/Boltzmann_distribution_graph.svg}
+  },
+  </script> -->
+
